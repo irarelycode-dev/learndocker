@@ -8,5 +8,12 @@ docker run -d -p host_port:container_port --name <container_name> <image>
 docker ps
 docker ps -a
 docker logs <container_name>
-docker container top <container_name> //displays the running process of the container
+docker top <container_name> //displays the running process of the container
 
+what happens when in "docker run"
+1. Looks for image locally in the cache
+2. If not, looks in the remote image repository (defaults to Docker Hub)
+3. download the latest version (nginx:latest by default)
+4. Creates a new container based on that image and prepares to start
+5. Gives it a virtual IP on a private network inside a docker engine
+6. opens up a port and runs
