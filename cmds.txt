@@ -17,3 +17,5 @@ what happens when in "docker run"
 4. Creates a new container based on that image and prepares to start
 5. Gives it a virtual IP on a private network inside a docker engine
 6. opens up a port and runs
+
+docker image rm <image_name>
