@@ -22,3 +22,4 @@ docker image rm <image_name>
 docker exec -it <image_name> sh
 docker start <container_id>
 docker kill <container_id>
+docker stop <container_id>
