@@ -26,3 +26,4 @@ docker stop <container_id>
 docker system prune //removes all containers, all networks not used by atleast one container, all dangling images and build cache
 docker images
 docker container rm <container_name>
+docker container inspeact <container_id> //returns a json of how the container was started.
