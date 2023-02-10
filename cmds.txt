@@ -5,8 +5,8 @@ docker run -d -p host_port:container_port <image>
 docker run --detach -p host_port:container_port <image>
 docker stop <container_id/container_name>
 docker run -d -p host_port:container_port --name <container_name> <image>
-docker ps
-docker ps -a
+docker ps or docker container ls
+docker ps -a or docker container ls -a
 docker logs <container_name>
 docker top <container_name> //displays the running process of the container
 
