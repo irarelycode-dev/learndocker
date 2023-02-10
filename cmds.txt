@@ -23,3 +23,4 @@ docker exec -it <image_name> sh
 docker start <container_id>
 docker kill <container_id>
 docker stop <container_id>
+docker system prune //removes all containers, all networks not used by atleast one container, all dangling images and build cache
