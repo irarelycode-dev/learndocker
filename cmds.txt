@@ -27,3 +27,22 @@ docker system prune //removes all containers, all networks not used by atleast o
 docker images
 docker container rm <container_name>
 docker container inspeact <container_id> //returns a json of how the container was started.
+docker container stats //returns live status of the running containers
+docker container run -it //starts new container interactively
+docker container exec -it //run additional command in existing container
+
+docker exec -it ubuntu sh
+# apt-get install -y curl
+#curl google.com
+#exit 
+
+docker exec -it mariadb bash //this runs an additional process on an existing running container
+#ps aux  //it is used to monitor processes running on a linux system
+
+
+
+docker networks
+1. each container is connected to a private virtual network called "bridge"
+2.Each virtual network routes through NAT firewal on host IP
+3.All containers on a virtual network can talk to each other without -p
+4.Best practice is to create a new virtual network for each app
