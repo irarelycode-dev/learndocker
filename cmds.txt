@@ -43,6 +43,13 @@ docker exec -it mariadb bash //this runs an additional process on an existing ru
 
 docker networks
 1. each container is connected to a private virtual network called "bridge"
-2.Each virtual network routes through NAT firewal on host IP
+2.Each virtual network routes through NAT firewall on host IP
 3.All containers on a virtual network can talk to each other without -p
 4.Best practice is to create a new virtual network for each app
+
+
+docker network ls
+docker network inspect <net_name> //summary of the network. All containers running on that network.
+docker run -d --name new_nginx --network my_app_net nginx
+docker network create my_app_net
+
