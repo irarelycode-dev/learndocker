@@ -73,3 +73,8 @@ Not a complete OS.No kernel,kernel modules.
 docker tag <image_name> <tag_name>
 docker history <image_name>:version
 
+//official repositories live at the root namespace of the registry, They do not need account_name in front of
+//<repo_name>
+
+docker login
+docker image push <image_name>
