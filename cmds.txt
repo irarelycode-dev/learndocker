@@ -69,3 +69,7 @@ image: image is an ordered collection of root filesystem changes and the corresp
 use within a container  runtime.
 
 Not a complete OS.No kernel,kernel modules.
+
+docker tag <image_name> <tag_name>
+docker history <image_name>:version
+
