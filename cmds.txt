@@ -71,6 +71,7 @@ use within a container  runtime.
 Not a complete OS.No kernel,kernel modules.
 
 docker tag <image_name> <tag_name>
+//when you tag an existing image, you get the same image_id
 docker history <image_name>:version
 
 //official repositories live at the root namespace of the registry, They do not need account_name in front of
@@ -78,3 +79,5 @@ docker history <image_name>:version
 
 docker login
 docker image push <image_name>
+dcoker image tag <old_image_name> <new_image_name>
+docker build -f <dockerfile> -t tag .
