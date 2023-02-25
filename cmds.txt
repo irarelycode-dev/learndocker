@@ -81,3 +81,10 @@ docker login
 docker image push <image_name>
 dcoker image tag <old_image_name> <new_image_name>
 docker build -f <dockerfile> -t tag .
+docker container rm <container_1>
+
+volumes and persistence
+
+docker volumes ls
+docker volume inspect <volume_name>
+docker container run -d --name maria -e MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=true -v mariadb-vol:/var/lib/mariadb mariadb
