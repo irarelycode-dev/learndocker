@@ -164,7 +164,8 @@ docker compose is not a production grade tool. It is ideal for local development
 
 docker compose up #sets up volumes/netwroks and start all containers
 docker compose down #stop all containers and remove containers/volumes/net
+docker compose ls
 
-
-
-
+Version 2 and above provide significantly more features then the old default version 1,
+and what we will be using as a default base for this course. Bonus Note: v2.x is actually
+better for local docker-compose use, and v3.x is better for use in server clusters (Swarm and Kubernetes)
