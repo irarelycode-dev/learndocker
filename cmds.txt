@@ -358,5 +358,41 @@ kubectl get pods -w
 
 
 
+service types:
+
+1. Custer IP:
+single,internal virtual IP allocated
+only reachable within the cluster (nodes and pods)
+pods can reach service on apps port number
+
+
+2. NodePort:
+
+high port allocated on each node
+port is open on every node's IP
+anyone can connect (if they can reach node)
+other pods needs to be updated on this port
+
+
+Above service types are available in kubernetes infrastructure
+
+3. LoadBalancer:
+
+controls a LB endpoint external to the cluster
+Available through a infra provider
+Creates NodePort+ClusterIP services, tells LB to send to NodePort
+
+4. ExternalName
+
+Adds CName DNS record to CoreDNS 
+Not used for pods, but for giving pods a DNS
+name to use for something outisde kubernetes
+
+
+
+
+
+
+
 
 
