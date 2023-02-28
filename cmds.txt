@@ -232,3 +232,131 @@ You can create a swarm of one manager node, but you cannot have a worker node wi
 To prevent the scheduler from placing tasks on a manager node in a multi-node swarm, set the availability for the manager node to Drain. The scheduler gracefully stops tasks on nodes in Drain mode and schedules the tasks on an Active node. The scheduler does not assign new tasks to nodes with Drain availability.
 
 Refer to the docker node update command line reference to see how to change node availability.
+
+
+
+
+
+kubernetes container orchestration
+
+kubernetes: whole orchestration system.pronounced as kube-8s or kube for short.
+kubectl: cli to configure kubernetes and manage apps. Pronounced as "kube control".
+node: single server in kubernetes cluster
+kubelet:kubernetes agent running on node
+control panel: set of containers that manage the cluster. Includes api server,scheduler,controller manager,etcd
+and more. Sometimes called master.
+
+
+Kubernetes is a sort of meta-process that grants the ability to automate the deployment and scaling of several
+containers at once. Several containers running the same application are grouped together. These containers act
+as replicas and serve to load balance the incoming requests. A container orchestrator, then, supervises these groups
+,ensuring they are operating correctly.
+
+
+https://sensu.io/blog/how-kubernetes-works
+
+A container orchestrator is essentially an administrator in charge of operating a fleet of containerized
+applications. If a container needs to be restarted or acquire more resources, 
+the orchestrator takes care of it for you.
+
+
+A Kubernetes pod is a group of containers, and is the smallest unit that Kubernetes administers. 
+Pods have a single IP address that is applied to every container within the pod. 
+Containers in a pod share the same resources such as memory and storage. 
+This allows the individual Linux containers inside a pod to be treated collectively as a single application,
+as if all the containerized processes were running together on the same host in more traditional workloads.
+It’s quite common to have a pod with only a single container, when the application or service is a single process
+that needs to run. But when things get more complicated, and multiple processes need to work together using
+the same shared data volumes for correct operation, multi-container pods ease deployment configuration compared
+to setting up shared resources between containers on your own.
+
+
+Deployments:
+
+Kubernetes deployments define the scale at which you want to run your application by letting you set
+the details of how you would like pods replicated on your Kubernetes nodes.
+Deployments describe the number of desired identical pod replicas to run and the
+preferred update strategy used when updating the deployment. 
+Kubernetes will track pod health, and will remove or add pods as needed to bring your
+application deployment to the desired state.
+
+
+Services:
+
+A service is an abstraction over the pods, and essentially, the only interface the various application consumers
+interact with. As pods are replaced, their internal names and IPs might change.
+A service exposes a single machine name or IP address mapped to pods whose underlying names and 
+numbers are unreliable. A service ensures that, to the outside network, everything appears to be unchanged.
+Network endpoint to conect to a pod
+
+
+Nodes:
+
+A Kubernetes node manages and runs pods; it’s the machine (whether virtualized or physical) that performs
+the given work. Just as pods collect individual containers that operate together,
+a node collects entire pods that function together. When you’re operating at scale, 
+you want to be able to hand work over to a node whose pods are free to take it.
+
+
+The Kubernetes control plane
+
+
+The Kubernetes control plane is the main entry point for administrators and users to manage the various nodes. 
+Operations are issued to it either through HTTP calls or connecting to the machine and
+running command-line scripts. 
+As the name implies, it controls how Kubernetes interacts with your applications.
+
+
+Cluster
+
+A cluster is all of the above components put together as a single unit.
+
+
+Control plane
+
+API Server
+The API server exposes a REST interface to the Kubernetes cluster. 
+All operations against pods, services, and so forth, are executed programmatically by communicating
+with the endpoints provided by it.
+
+Scheduler
+The scheduler is responsible for assigning work to the various nodes.
+It keeps watch over the resource capacity and ensures that a worker node’s 
+performance is within an appropriate threshold.
+
+Controller manager
+The controller-manager is responsible for making sure that the shared state of the
+cluster is operating as expected. More accurately, the controller manager oversees 
+various controllers which respond to events (e.g., if a node goes down).
+
+kubectl commands:
+
+kubectl version
+kubetcl version --short
+
+kubectl run nginx-pod --image nginx
+kubectl get pods
+kubectl get all
+
+unlike docker you cannot create containers directly in k8s.
+you create a pod via cli,yaml or api. Kubernetes then creates containers inside it.
+kubelet tells container runtime to create containers for you.
+cli->control panel(etcd,api server,controller-manager,scheduler)->kubelet->container runtime->
+
+kubectl create deployment nignx-deployment --image nginx
+kubectl scale deploy <deployment_name> --replicas 2
+kubectl scale deploy/<deployment_name> --replicas 2
+
+
+kubectl logs deployment/my-apache
+kubectl logs deployment/my-apache --follow //much like watch mode
+kubectl logs deployment/my-apache --follow --tail 1 //give the last line of the update
+kubectl describe pod <pod_name>
+kubectl describe deployment <deployment_name>
+
+kubectl get pods -w 
+
+
+
+
+
