@@ -308,14 +308,22 @@ routing mesh
 * This LB is at OSI layer 3(TCP), not layer 4(DNS)
 
 
+cat > user.txt
+enter some user (psql_user)
+
+docker secret create psql_user user.txt
+echo "myDBPass" | docker secret create psql_pass -
+
+docker service create --name psql --secret psql_user --secret psql_pass -e POSTGRES_PASSWORD_FILE=/run/secrets/psql_pass -e POSTGRES_USER_FILE=/run/secrets/psql_user postgres
+psql_user and psql_pass secrets will be stored inside on the container postgres file system
+
+
 
 Swarm stacks
 1. Docker adds new layer of abstraction to swarm called stacks
-2. Stacks accept compose files as their decalrative definition for services,networks and volumes
+2. Stacks accept compose files as their declarative definition for services,networks and volumes
 3. Use docker stack deploy rather than docker service created
 4. Stack manages all thise objects for use,including overlay network per stack. Adds stack name to the start of their name
-
-
 
 
 
