@@ -191,6 +191,18 @@ docker info
 docker swarm init
 docker swarm leave 
 
+on docker swarm init:
+1. Lots of PKI and security automation
+* root signing certificate created for swarm
+* certificate is issued for first node manager
+* join tokens are created
+2.Raft database created to store root CA,configs and secret
+* encrypted by default on disk
+* no need for another key/value system to hold orchestration secrets
+* replicates logs amongst managers via mutual TLS in "control pane"
+
+
+In swarm mode, you use service command which is similar to run command. It starts a service
 
 docker service create alpine ping 8.8.8.8
 docker service ls
@@ -198,24 +210,53 @@ docker container ls
 docker service ps <service_name>
 docker service update <service_name> --replicas <number>
 
+
+Docker Node: this is a host running Docker engine. It can be a physical or virtual machine. A Docker node can run as a manager node, worker node or both.
+Manager Node: These are the nodes run orchestration and cluster management functions. They are responsible for maintaining the desired state of the swarm. They dispatch units of work called tasks to worker nodes.
+Note that by default manager nodes also act as a worker nodes. This means the scheduler can assign tasks to a manager node.
+Worker Node: These are the nodes that receive and execute tasks dispatched from the manager nodes.
+Tasks: A task is a running container which is part of a swarm service and managed by a swarm manager.
+Service: A service is the definition of the tasks to execute on the manager or worker nodes.
+
+Docker Swarm is a clustering tool that turns a group of Docker hosts into a single virtual server. Docker Swarm ensures availability and high performance for your application by distributing it over the number of Docker hosts inside a cluster. Docker Swarm also allows you to increase the number of container instance for the same application. Clustering is an important feature of container technology for redundancy and high availability. You can manage and control clusters through a swarm manager. The swarm manager allows you to create a primary manager instance and multiple replica instances in case the primary instance fails. Docker Swarm exposes standard Docker API, meaning that any tool that you used to communicate with Docker (Docker CLI, Docker Compose, Krane, and Dokku) can work equally well with Docker Swarm. Features of Swarm Mode:
+Provides Docker Engine CLI to create a swarm of Docker Engines where you can deploy application services. You don't need any additional software tool to create or manage a swarm.
+Swarm manager assigns a unique DNS name to each service in the swarm. So you can easily query every container running in the swarm through a DNS name.
+Each node in the swarm enforces TLS mutual authentication and encryption to secure communications between itself and all other nodes. You can also use self-signed root certificates or certificates from a custom root CA.
+Allows you to apply service updates to nodes incrementally.
+Allows you to specify an overlay network for your services and how to distribute service containers between nodes.
+
+
+
+
 use docker playground 
 
-create three nodes 
+create three nodes or virtual machines
 
-docker swarm init in node 1
+ssh into the virutal machines
+
+docker swarm init --advertise-address IPADDRESS in node 1
 copy and paste the tokens generated in node 1 to node 2 and node 3
 docker node update --role manager node 2
 
-docker node ls 
-docker swarm join-token manager // returns token to join
+docker node ls //returns all the nodes along with their status and leadership
+docker swarm join-token manager // returns token to join the swarm as a manager
 watch docker service ls
 
+docker service ls
+docker service ps <service_name>
+
+docker container ps/docker container ls
+docker container ps -a 
+
+the above two commands will return running containers on the current node only
+
+only managers can use node and service commands
 
 
 In node 1:
 docker service create --replicas 3 alpine ping 8.8.8.8
 
-This will create 3 containers of alpine in node1,node2 and node 3
+This will create 3 containers of alpine in node1,node2 and node 3, one in each
 
 Docker Engine 1.12 introduces swarm mode that enables you to create a cluster of one or more Docker Engines called a swarm.
 A swarm consists of one or more nodes: physical or virtual machines running Docker Engine 1.12 or later in swarm mode.
@@ -246,6 +287,65 @@ You can create a swarm of one manager node, but you cannot have a worker node wi
 To prevent the scheduler from placing tasks on a manager node in a multi-node swarm, set the availability for the manager node to Drain. The scheduler gracefully stops tasks on nodes in Drain mode and schedules the tasks on an Active node. The scheduler does not assign new tasks to nodes with Drain availability.
 
 Refer to the docker node update command line reference to see how to change node availability.
+
+docker node ps - this returns info only about the current node
+docker node ls- this returns info about all nodes
+
+overlay multi-host networking:
+
+* just choose --driver overlay when creating network
+* for container to container traffic inside a single swarm
+
+
+routing mesh 
+
+* routes ingress packets for a service to the correct task
+* spans all nodes in swarm
+* Load balances swarm services across their tasks. Two ways this works:
+1. container-to-container in a overlay network
+2. external traffic incoming to published ports
+* This is a stateless load balancing
+* This LB is at OSI layer 3(TCP), not layer 4(DNS)
+
+
+
+Swarm stacks
+1. Docker adds new layer of abstraction to swarm called stacks
+2. Stacks accept compose files as their decalrative definition for services,networks and volumes
+3. Use docker stack deploy rather than docker service created
+4. Stack manages all thise objects for use,including overlay network per stack. Adds stack name to the start of their name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
