@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodeone-pod
+spec:
+  hostNetwork: true
+  containers:
+    - name: nodeone
+      image: irarelycode/nodeone
+      # ports:
+      #   - containerPort: 5342
+      #     hostPort: 5342

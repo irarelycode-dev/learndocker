@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeone-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeone
+  template:
+    metadata:
+      labels:
+        app: nodeone
+    spec:
+      containers:
+        - name: nodeone
+          image: irarelycode/nodeone
+          ports:
+            - containerPort: 5342
+              hostPort: 5342

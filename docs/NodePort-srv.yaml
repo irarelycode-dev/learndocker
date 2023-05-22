@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeport-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeport
+  template:
+    metadata:
+      labels:
+        app: nodeport
+    spec:
+      containers:
+        - name: nodeport
+          image: irarelycode/nodeone
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-srv
+spec:
+  type: NodePort
+  selector:
+    name: nodeport
+  ports:
+    - port: 5342
+      targetPort: 5342
+      protocol: TCP
