@@ -6,15 +6,16 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodeport
+      app: nodeone-1
   template:
     metadata:
       labels:
-        app: nodeport
+        app: nodeone-1
     spec:
       containers:
-        - name: nodeport
+        - name: nodeone-1
           image: irarelycode/nodeone
+
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +24,7 @@ metadata:
 spec:
   type: NodePort
   selector:
-    name: nodeport
+    name: nodeone-1
   ports:
     - port: 5342
       targetPort: 5342

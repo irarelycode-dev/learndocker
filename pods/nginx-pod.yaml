@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-redis-multi-container-pod
+  labels:
+    app: nginx-redis
+    tier: backend
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+    - name: redis
+      image: redis

@@ -529,3 +529,8 @@ Three approaches to kubernetes management:
 kubectl apply -f myfile.yaml //create or update resources in a file
 kubectl apply -f myyaml/ //create or update a whole document of yaml
 kubectl apply -f https://bret.run/pod.yaml //create or update from a url 
+
+kubectl run nginx --image=nginx //creates a pod
+kubectl describe pod <pod-name> // description of the pod, ip, which node it runs on,how many containers and what image is used
+kubectl run redis --image=redis123 --dry-run=client -o yaml > redis-definition.yaml
+kubectl edit pod <image-name>
