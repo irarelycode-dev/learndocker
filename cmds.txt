@@ -534,3 +534,21 @@ kubectl run nginx --image=nginx //creates a pod
 kubectl describe pod <pod-name> // description of the pod, ip, which node it runs on,how many containers and what image is used
 kubectl run redis --image=redis123 --dry-run=client -o yaml > redis-definition.yaml
 kubectl edit pod <image-name>
+
+kubectl create -f replication-controller-def.yaml
+kubectl get replicationcontroller
+
+kubectl create -f replica-set.yaml
+kubectl get replicaset
+
+kubectl describe replicaset <replicaset-name>
+kubectl scale rs new-replica-set --replicas=5
+
+kubectl run nginx --image=nginx
+kubectl run nginx --image=nginx --dry-run=client -o yaml
+kubectl create deployment --image=nginx nginx
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml
+kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
+kubectl describe service <service-name>
+kubectl run redis-pod --image=redis:alpine --dry-run=client -o yaml > redis-pod.yaml
